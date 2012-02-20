@@ -1,0 +1,71 @@
+--- 
+layout: post
+title: Getting a random subset from a JavaScript array
+tags: []
+
+status: draft
+type: post
+published: false
+meta: 
+  _edit_last: "1"
+  _syntaxhighlighter_encoded: "1"
+  _aioseop_keywords: javascript,array,randomise,random subset,jscript,random sort,sort
+---
+I was answering a question on <a href="http://stackoverflow.com/questions/7160186/how-do-i-find-the-min-value-from-randomised-set-of-numbers/7160515#7160515">StackOverflow</a> and it got me thinking about the proper way to get a random subset from a JavaScript array.
+
+For large arrays, this is unlikely to be a large problem. However, if you wanted to get 3 random numbers from a array of 5 elements, it's quite likely that you'll continually hit the same element over and over. The other problem, of course, is if your array has duplicate values on purpose.
+
+This is where my solution comes in. You should randomly sort the array and then take a slice of the array for the amount of random elements you actually want. This ensures that you're not checking for duplicates. If there are duplicates, then it's because there was more than one of the element in the original array and you probably want them anyway. The point is, even with very small arrays you will never be stuck in a while loop that is trying to get a new and unique random element.
+
+[javascript]
+// Randomly sort the array
+myArray.sort(function(){ return Math.random() - 0.5 });
+
+// Get a subset of 6 numbers
+var randomArray = arr.slice(0,6);
+[/javascript]
+
+An array sort can take in a sort function to determine how it will sort the elements. A negative value will mean a&lt;b, a zero will mean a==b and a positive number means a&gt;b. Math.random() returns a value between 0 and 1 so by substracting 0.5 from it, we will be given a random value between -0.5 and 0.5. This is fine for our sort function.
+
+Okay - before anyone goes on about how this is a suboptimal solution I'm already ahead of you:
+
+[javascript]
+var counter = 0;
+
+myArray.sort(function(){ counter++; return Math.random() - 0.5 });
+
+alert('Random was called ' + counter + ' times'); // Not a nice result
+[/javascript]
+
+Running the above code as a jsFiddle shows me that the sort function was called about 165 times (give or take) to shuffle an array of 45 elements. Running it on 10,000 elements and it gets called about 114,000 times. Madness!
+
+So what's next? Well, we can use a fairly efficient shuffle algorithm known as the <a title="Fisher-Yates Shuffle on Wikipedia" href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher-Yates Shuffle</a>. This is something I came across on a <a title="Is it correct to use JavaScript Array.sort() method for shuffling? on Stack Overflow" href="http://stackoverflow.com/questions/962802/is-it-correct-to-use-javascript-array-sort-method-for-shuffling">Stack Overflow answer</a> (actually asking a question about shuffling using Math.random).
+
+Let's have a look at the implementation from that answer:
+
+[javascript]
+function shuffle(array) {
+    var tmp, current, top = array.length;
+
+    if(top) while(--top) {
+        current = Math.floor(Math.random() * (top + 1));
+        tmp = array[current];
+        array[current] = array[top];
+        array[top] = tmp;
+    }
+
+    return array;
+}
+
+// Randomly sort the array and take 6
+var randomArray = shuffle(myArray).slice(0,6);
+[/javascript]
+
+The time complexity here is O(n) so it's much quicker than just using the Math.random() sort. How much quicker? Well, let's have a look at the performance of the Fisher-Yates shuffle vs the random sort using <a title="Performance of Fisher-Yates shuffle vs Math.random sort function on jsPerf" href="http://jsperf.com/fisher-yates-shuffle-vs-math-random">jsPerf</a>.
+
+<a href="http://www.bolsterweb.com/wp-content/uploads/2011/09/fisheryates-vs-randomsort.png"><img class="aligncenter size-full wp-image-290" title="Fisher-Yates vs Math.Random shuffle" src="http://www.bolsterweb.com/wp-content/uploads/2011/09/fisheryates-vs-randomsort.png" alt="Fisher-Yates vs Math.Random shuffle" width="671" height="345" /></a>
+
+Look at that difference! We're no longer getting 114,000 random numbers and it shows.
+
+All we're left with is to call the slice function on the array to get our random subset.
+<h3>Conclusion</h3>

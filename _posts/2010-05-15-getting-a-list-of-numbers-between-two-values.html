@@ -1,0 +1,41 @@
+--- 
+layout: post
+title: Getting a list of numbers between two values
+tags: 
+- C#
+- code
+- dotnet
+- extension
+- Programming
+status: publish
+type: post
+published: true
+---
+This is yet another extension.
+
+I don't like Enumerable.Range() for the sole reason you have to give a start index and a count. So I made up my own. This is an extension for an integer type and will allow you to specify two values that you want a range for
+
+{% highlight csharp %}
+    public static IEnumerable<int> RangeTo(this int startValue, int endValue, int step)
+    {
+        return (endValue < startValue) ?
+        Enumerable.Range(endValue, startValue - endValue + 1).Reverse() :
+        Enumerable.Range(startValue, endValue - startValue + 1);
+    }
+{% endhighlight %}
+
+This will also allow for reverse lists - see how to use it below:
+
+{% highlight csharp %}
+    1.RangeTo(10);  // {1,2,3,4,5,6,7,8,9,10}
+    5.RangeTo(10);  // {5,6,7,8,9,10}
+    10.RangeTo(5);  // {10,9,8,7,6,5}
+    3.RangeTo(3);   // {3}
+
+    int x = 15;
+    int y = 17;
+    x.RangeTo(10);  // {15,14,13,12,11,10}
+    y.RangeTo(x);  // {17,16,15}
+    x.RangeTo(y);  // {15,16,17}
+    13.RangeTo(x); // {13,14,15}
+{% endhighlight %}

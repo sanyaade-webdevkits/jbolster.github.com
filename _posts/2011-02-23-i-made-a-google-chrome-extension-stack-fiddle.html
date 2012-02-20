@@ -1,0 +1,41 @@
+--- 
+layout: post
+title: I made a Google Chrome Extension - Stack Fiddle!
+tags: 
+- chrome-extension
+- Programming
+status: publish
+type: post
+published: true
+---
+That's right! Today I decided to make my own Google Chrome extension - and I call it [Stack Fiddle][1].
+
+It's pretty simple, really. I like answering questions on [Stack Overflow][2] - I mostly like the jQuery / JavaScript questions. One tool that I absolutely love is [jsFiddle][3]. You have three boxes (JavaScript, CSS, HTML) that you can put your code and the result appears. No faffing around with having to set up any scaffolding to get simple tests done.
+
+So what have I done then? I've combined the two! A lot of helpful people put their CSS, JavaScript and HTML in separate code blocks which is great - but then I have to copy and paste them individually into jsFiddle and change the framework to jQuery. My extension gives all the code blocks a handy little header like this one:
+
+![The header that StackFiddle adds to the Stack Overflow page](http://howdy.bolsterweb.com/blog/wp-content/uploads/2011/02/doc-21.png)
+
+Click the HTML / JavaScript / CSS to choose the ones that you want to fiddle with and then press the 'Send to jsFiddle' link. Everything is sent off to jsFiddle and it's ready to go.
+
+This is just the first version so the feature list is pretty short:
+
+* Easily select code blocks to send to jsFiddle
+* Choose your default framework and version
+* Detect all the jsFiddle links and create links to display the embedded fiddle in the page
+
+Since posting it to the Chrome extensions gallery I've come up with a few ideas on how to make it better (including prettifying it a little - as the logo I tried making is rubbish) **but** if you have any ideas then leave me a comment or send me a message on [Twitter (@jbolster)][4].
+
+Give it a whirl and let me know if it's useful for you :) Download it at: [https://chrome.google.com/extensions/detail/loemajeogfdlphofpdfncpbbeoenmbpm][1]
+
+Some future features that I'm thinking of:
+
+* Giving it a better design/logo
+* Possibly extending to other stack exchange sites (suggestions!)
+* Displaying the Stack Fiddle header only on questions that have certain tags
+* Enabling appending of multiple code blocks
+
+[1]: <https://chrome.google.com/extensions/detail/loemajeogfdlphofpdfncpbbeoenmbpm> "Stack Fiddle on the Chrome App Store"
+[2]: <http://www.stackoverflow.com> "Stack Overflow"
+[3]: <http://www.jsfiddle.net> "jsFiddle"
+[4]: <http://twitter.com/jbolster> "Jonathon Bolster on Twitter"

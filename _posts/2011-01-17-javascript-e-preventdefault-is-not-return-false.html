@@ -1,0 +1,29 @@
+--- 
+layout: post
+title: JavaScript - e.preventDefault() is NOT return false
+tags: 
+- code
+- javascript
+- JavaScript
+- Programming
+status: publish
+type: post
+published: true
+---
+I've seen a lot of people use `return false` in place of `e.preventDefault`. This is usually when dealing with setting the click event on a hyperlink. I can only think that this comes from the original JavaScript snippets of running code on a click by setting `onclick="alert('hi'); return false"`.
+
+**This is wrong**
+
+Well - it might be wrong. It all depends on your application. As long as you know the differences in them, you should be fine:
+
+* **e.preventDefault**: this (aptly) prevents the default event from happening. In the case of a hyperlink that you want to assign JavaScript to, this will stop the link from going to the location of the link
+* **e.stopPropagation**: this stops the event from bubbling up. If you click on something that had a click event then using this will stop the event bubbling up and any click event that the parent containers might have.
+* **return false**: this is the same as calling both of the methods above.
+
+I've done two examples for this:
+
+1. [Showing the difference in e.preventDefault() and return false][1]: This example works on the click event and shows that preventDefault and return false are actually different.
+2. [Example of e.stopPropagation][2]: This example shows a practical example of when you'd want to stop an event bubbling up. It uses event handlers on the mouseover event to show this.
+
+[1]: <http://jsfiddle.net/jonathon/XTY5c/>
+[2]: <http://jsfiddle.net/jonathon/JLMaR/>

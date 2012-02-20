@@ -1,0 +1,61 @@
+--- 
+layout: post
+title: Dell Mini 9 - Updating the BIOS without Windows or a USB DOS
+tags: 
+- bios
+- Dell mini
+status: publish
+type: post
+published: true
+---
+Recently I bought myself a Dell Mini 9, with Ubuntu installed. It seemed to be great, except the battery didn't charge (although this fixed itself), from what I read elsewhere, it's necessary to leave it plugged into the AC for a certain amount of time. There was other tweaking and pressing of buttons but I think that was what did it.
+
+Whilst looking around, I found another problem. There was information about newer versions of the BIOS fixing some battery issues. I had version A00 of the BIOS but, currently, the most recent is version A05 - and Dell only do Windows versions of the flasher.
+
+I don't have a copy of Windows. I have a Mac Mini, which runs Leopard, and now Ubuntu on this laptop. My previous laptop had a Windows partition, but that had been wiped completely ready for sale and I'm not willing to spend the time reinstalling to create a USB version of DOS.
+
+The options seemed to be:
+
+* Find someone with a Windows machine
+* Install a Windows partition on my laptop
+* Install Freedos, and do some tweaking so that it runs from USB key.
+
+I found another option though:
+
+* Flash the BIOS, without having to install anything extra or use a USB key.
+
+I'd spotted that there's a Fat16 partition at the beginning of the hard drive. I mounted this and found that it's Dell's diagnostics partition - which runs under DOS. It seemed promising. So I renamed the AUTOEXEC.BAT file, so it would just load to a command line, and changed the grub menu on my Ubuntu filesystem to boot up the Dell partition.
+
+**Please note: I take no liability for anything you do to your computer whilst trying this. It worked for me (yeay), and hopefully it will work for you. So please know what your doing.**
+
+Firstly, mount the Dell utility partition - this needs to be done as a root user (i.e. sudo)
+
+    $ sudo mkdir dellpart
+    $ sudo mount /dev/sda9 dellpart
+
+Then rename the autoexec.bat and autoexec.up to something else (I just named them autoexecOLD.bat and autoexecOLD.up). Not too sure if the *.up file does anything but it doesn't hurt to rename. You want to rename these files so they don't automatically run.
+
+    $ sudo mv ./dellpart/autoexec.bat ./dellpart/autoexecOLD.bat
+    $ sudo mv ./dellpart/autoexec.up ./dellpart/autoexecOLD.up
+
+Then download the DOS version of the BIOS you want - in my case, this was A05 (filename: QHA05DOS.EXE).
+
+    $ sudo cp QHA05DOS.EXE ./dellpart/
+
+That's pretty much all that's needed in the Dell partition, you just need access to it. Originally I updated the grub menu, but then I found that it wasn't necessary to do so. When you restart your Mini, pick 'Boot Options' to choose a boot device and then select 'Dell Diagnostics'
+
+That loads the DOS command line - then just do:
+
+    c:> QHA05DOS.EXE
+
+And that's it! The BIOS flasher will begin to run - soon you'll be updated with the new BIOS. Be sure to run it with AC plugged in, etc.
+
+For me, this completed and then turned the screen black for a few seconds. I found that the program restarted the machine for me - so don't interrupt it when it's doing that 10 or so seconds of black screen.
+
+I _also_ had a slight problem with it not going back to Ubuntu. The grub menu didn't show up, so I assume that the boot device was changed somehow. I played about for a bit and when I ran _seal.exe_ it brought up the initial 'This is your service tag' screen and then that worked. One of the files on the Dell parition says that the seal program 'hacks the disk' - so I assume it sets the boot partition back to the Ubuntu partition.
+
+And that's it! All should be updated :) Please note, that renaming the autoexec.bat files means they wont automatically run. So if you need to run the diagnostics, then it wont automatically execute. You might want to rename them back (you'll need to remount, etc).Otherwise, if you want a handy DOS command line without the diagnostics automatically showing, the program you need to run is: 
+
+    c:\diags\delldiag.com
+
+This all worked for me - but I can't guarantee it will work for everyone. Good luck :)

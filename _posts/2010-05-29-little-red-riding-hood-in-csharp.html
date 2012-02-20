@@ -1,0 +1,204 @@
+--- 
+layout: post
+title: Little Red Riding Hood - In C#
+tags: 
+- bedtime
+- bored
+- C#
+- Random Musings
+- stories
+status: publish
+type: post
+published: true
+---
+Tonight, I was bored. Seriously, it was either this or watching the Eurovision song contest. Sadly, with BBC iPlayer, I was able to do both.
+
+I've decided that when I have kids, they're going to know how to use computers and learn how to program (I can wish).
+
+So, I've rewritten the story of Little Red Riding Hood. This time it's in C#. I have no idea why I decided I would do this - by the time I'd realised, it was too late
+
+So if you want to tell your kids a bedtime story whilst edging them into becoming programmers, read on.
+
+	// The story of Little Red Riding Hood - as told in C#
+	var story = new Story()
+	{
+		Name = "Little Red Riding Hood",
+		Description = "The story of a girl who meets a wicked wolf on her way to her grandmother's house"
+	};
+
+	// Once upon a time, there was one little girl who was loved by everyone. Her
+	// grandmother especially loved her and gave her a Red Riding Hood, which suited
+	// her so well that she would never wear anything else. So she was called 'Little
+	// Red Riding Hood'
+	var littleRedRidingHood = population.Where(x =>
+									x.Sex == Sex.Female &&
+									x.Characteristics.HasFlag(Characteristics.Lovely) &&
+									x.AgeGroup == AgeGroup.Child &&
+									x.Clothes.Any(y =>
+										y.Name == "Riding Hood" &&
+										y.Colour == Color.Red
+										)
+									)
+									.OrderBy(x => x.Popularity)
+									.First();
+
+	// One day, her mother gave her some cake and wine to take to her grandmother as
+	// she was ill. Little Red Riding Hood put them into her basket, and set off for
+	// grandmother's house.
+	var foodForGrandmother = cupboard.Where(x = x is Cake || x is Wine).ToList();
+
+	foreach (var foodItem in foodForGrandmother)
+	{
+		cupboard.Remove(foodItem);
+	}
+
+	littleRedRidingHood.Basket.AddRange(foodForGrandmother);
+
+	// Her grandmother lived out in the wood and, just as Little Red Riding Hood entered
+	// the wood, she met a wolf. She was not afraid of him, since she did not know how
+	// wicked he was.
+	wood.Occupants.Add(littleRedRidingHood);
+
+	var wolf = new Character()
+	{
+		Clothes = Enumerable.Empty<Clothes>(),
+		CurrentLocation = wood,
+		Home = wood,
+		Popularity = 0,
+		Characteristics = Characteristics.Wicked,
+		Sex = Sex.Male
+	};
+
+	littleRedRidingHood.CurrentLocation = wolf.CurrentLocation;
+	littleRedRidingHood.Mood ^= Mood.Fear;
+
+	// The wolf asked where Little Red Riding Hood was going. She explained that she
+	// was bringing her grandmother some food, as she was poorly. The wolf asked
+	// where her grandmother lived.
+	wolf.Knowledge.Add(grandmother.Home);
+
+	// The wolf thought Little Red Riding Hood looked tasty and would be much better
+	// to eat than the old woman. He knew he must be crafty, to catch both.
+	wolf.Appetite.Add(grandmother);
+	wolf.Appetite.Add(littleRedRidingHood);
+	wolf.Mood |= Mood.Hungry;
+
+	// The wolf convinced Little Red Riding Hood to stray from the path and pick flowers
+	// for her grandmother. Then he ran off to her grandmother's house whilst Little Red
+	// Riding Hood picked flowers; until she could carry no more.
+	wolf.CurrentLocation = grandmother.Home;
+
+	littleRedRidingHood.Basket.AddRange(
+		wood.Items.Where(x => x is Flower).Take(littleRedRidingHood.Basket.MaxSize - littleRedRidingHood.Basket.Count)
+		);
+
+	// The wolf reached grandmother's house and knocked on the door. 'Who is it?', she asked.
+	// 'Little Red Riding Hood', replied the wolf. 'She is bringing wine and cake'.
+	// 'Lift the latch', grandmother said, 'I am too weak to open it'. The wolf opened the
+	// door and, without saying a word, immediately jumped in and gobbled up grandmother.
+	wolf.Belly.Add(grandmother);
+	wood.Occupants.Remove(grandmother);
+
+	// The wolf heard Little Red Riding Hood come close, and quickly put on the grandmother's
+	// clothes and jump into her bed.
+	wolf.Clothes = grandmother.Clothes;
+
+	// Little Red Riding Hood reached her grandmother's house and, seeing the door open, felt
+	// very uneasy - but entered anyway.
+	littleRedRidingHood.CurrentLocation = grandmother.Home;
+	littleRedRidingHood.Mood |= Mood.Nervous;
+
+	// 'Oh grandma, what big ears you have', said Little Red Riding Hood
+	// 'All the better to hear you with, my child', replied the wolf
+	if (!wolf.Features.Ears.Equals(grandmother.Features.Ears))
+	{
+		littleRedRidingHood.Mood |= Mood.Nervous;
+	}
+
+	// 'But, grandmother, what big eyes you have', she said.
+	// 'All the better to see you with, my dear'
+	if (!wolf.Features.Eyes.Equals(grandmother.Features.Eyes))
+	{
+		littleRedRidingHood.Mood |= Mood.Nervous;
+	}
+
+	// 'But, grandmother, what large hands you have!'
+	// 'All the better to hug you with'
+	if (!wolf.Features.Hands.Equals(grandmother.Features.Hands))
+	{
+		littleRedRidingHood.Mood |= Mood.Nervous;
+	}
+
+	// 'Oh! grandma, what a terribly big mouth you have'
+	// 'All the better to eat you with!'
+	if (!wolf.Features.Mouth.Equals(grandmother.Features.Mouth))
+	{
+		littleRedRidingHood.Mood |= Mood.Fear;
+	}
+
+	// And with that, the wolf jumped out of bed and gobbled up Little
+	// Red Riding Hood!
+	wolf.Belly.Add(littleRedRidingHood);
+	wolf.Appetite.Clear();
+
+	// After appeasing his appetite, the wolf lay on the bed, fell
+	// asleep and began snoring very loudly.
+	wolf.Mood = Mood.Tired;
+
+	// Just then, a huntsman was passing and thought to himself 'How
+	// the old woman is snoring! I must see if she wants anything.'
+	var huntsman = new Character()
+	{
+		Characteristics = Characteristics.Strong,
+		AgeGroup = AgeGroup.Adult,
+		Sex = Sex.Male,
+	};
+
+	huntsman.CurrentLocation = grandmother.Home;
+
+	// The huntsman entered the house and saw the wolf sleeping.
+	// 'You!', exclaimed the huntsman, 'How long I have looked for you
+	// wicked thing' and raised his gun to shoot the wolf
+	huntsman.Mood = Mood.Anger;
+
+	// The huntsman realised the wolf may have eaten the old woman, and
+	// put his gun down. Instead, he used some scissors to open the wolf's
+	// belly. Out sprang Little Red Riding Hood. 'How frightened I have
+	// been', she told him.
+	wolf.Belly.Remove(littleRedRidingHood);
+	littleRedRidingHood.Mood ^= Mood.Fear;
+	littleRedRidingHood.Mood |= Mood.Happy;
+
+	// Out followed her grandmother, but scarcely able to breath.
+	wolf.Belly.Remove(grandmother);
+	grandmother.Mood = Mood.Happy | Mood.Tired | Mood.Hungry;
+
+	// Little Red Riding Hood ran out into the wood and picked up stones
+	// to fill the wolf's belly with
+	var stones = wood.Items.Where(x => x is Stone).Take(wolf.Belly.MaxSize);
+	wolf.Belly.AddRange(stones);
+
+	// When the wolf awoke, he tried to run away but the stones were so heavy
+	// that he fell at once, and fell dead
+	wolf.Mood ^= Mood.Tired;
+	wolf.Mood |= Mood.Shocked;
+	wood.Occupants.Remove(wolf);
+	wolf = null;
+
+	// The wolf had died, and the three were happy. The grandmother ate the cake
+	// and drank the wine, and was revived.
+	huntsman.Mood = Mood.Happy;
+	littleRedRidingHood.Mood = Mood.Happy;
+
+	grandmother.Belly.AddRange(littleRedRidingHood.Basket.Where(x=> x is Cake || x is Wine));
+	grandmother.Mood = Mood.Happy;
+
+	// The huntsman took the skin off the wolf and took it home, and Little Red
+	// Riding Hood learnt that she should never stray off the path, especially
+	// when wolves tempt her.
+	//Assert.IsTrue(wolf.Characteristics.HasFlag(Characteristics.Wicked));
+
+	// The End
+	story.Ending = Ending.Happy;
+
+This actually compiles and runs to a happy ending (with the source of the other classes, of course). If you're going to read it as a bed time story to your children, it may as well compile.

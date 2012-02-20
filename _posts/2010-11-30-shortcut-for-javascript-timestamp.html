@@ -1,0 +1,27 @@
+--- 
+layout: post
+title: Shortcut for JavaScript timestamp
+tags: 
+- code
+- javascript
+- JavaScript
+- Programming
+status: publish
+type: post
+published: true
+---
+JavaScript's Date object provides a function for getting the milliseconds from the UNIX epoch - `getTime()`:
+
+    var timeStamp = new Date().getTime();
+
+However, there is a handy shortcut that gets the same thing:
+
+    var timeStamp = +new Date();
+
+It makes me wonder if the `+new` shortcut can work for any other JavaScript object but I haven't had a chance to look yet.
+
+**Update**: Apparently it's just the unary operator ([http://xkr.us/articles/javascript/unary-add/][1]). From the article:
+
+> The unary + operator, when used on types other than string, will internally attempt to call valueOf() or toString() (in that order) and then attempt to convert the result to a number. Thusly, the unary + operator can successfully convert many of the native JS types with certain restrictions.
+
+[1]: <http://xkr.us/articles/javascript/unary-add/> "The JavaScript unary operator"

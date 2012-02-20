@@ -1,0 +1,26 @@
+--- 
+layout: post
+title: Random sort on IEnumerable object
+tags: 
+- C#
+- code
+- dotnet
+- extension
+- linq
+- Programming
+status: publish
+type: post
+published: true
+---
+Quick extension on an IEnumerable object to return the collection in a random order:
+
+    public static IEnumerable<T> Random<T>(this IEnumerable<T> source)
+    {
+        return source.OrderBy(x => Guid.NewGuid());
+    }
+
+For example, to return a random set of 5 items from the collection:
+
+    var randomSet = myEnumerable.Random().Take(5);
+
+If anyone knows of a better way, let me know :)

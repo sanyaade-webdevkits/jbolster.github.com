@@ -1,0 +1,29 @@
+--- 
+layout: post
+title: Indexed IEnumerable extension
+tags: 
+- C#
+- code
+- dotnet
+- extension
+- Programming
+status: publish
+type: post
+published: true
+---
+The original intention for this was to clean up some code which was calling a `Select` to get an Index value so that basic zebra striping of rows could be done. It return an `IndexedType` generic class of type `T` which has properties for the original object and the index value of it.
+
+	public static IEnumerable<IndexedType<T>> Index<T>(this IEnumerable<T> source)
+	{
+		return source.Select((x, i) => new IndexedType<T>() { Item = x, Index = i });
+	}
+
+And the class returned:
+
+	public class IndexedType<T>
+	{
+		public T Item { get; set; }
+		public int Index { get; set; }
+	}
+
+This could be extended to include values like if the index value is even, N-Indexed values, etc but I leave that up to the imagination of the programmer.

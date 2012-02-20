@@ -1,0 +1,43 @@
+--- 
+layout: post
+title: Preventing accidental double clicks on links using jQuery
+tags: 
+- javascript
+- JavaScript
+- jquery
+- Programming
+- stackoverflow
+status: publish
+type: post
+published: true
+---
+I recently answered [this question on StackOverflow][1] asking how to prevent someone from clicking a link multiple times.
+
+This is the solution I came up with:
+
+{% highlight javascript %}
+	$("a").click(function(e) {
+	    e.preventDefault();
+
+	    if (!$(this).data('isClicked')) {
+		var link = $(this);
+
+		// Your code on successful click
+
+		// Set the isClicked value and set a timer to reset in 3s
+		link.data('isClicked', true);
+		setTimeout(function() {
+		    link.removeData('isClicked')
+		}, 3000);
+	    } else {
+		// Anything you want to say 'Bad user!'
+	    }
+	});
+{% endhighlight %}
+
+You can use [jQuery's data storage][2] methods to assign arbitrary bits of data to specific DOM elements. In this case, when the user clicks a link I assign a property to the element as well as setting a timer to remove it 3 seconds later. This lets me know if the specific element has already been clicked by just calling the `data` method.
+
+It's not a bullet proof solution since it's incredibly easy to get around if you're determined enough. However, it is a simple example of how you can use those methods.
+
+[1]: <http://stackoverflow.com/questions/4410282/how-can-i-prevent-button-mashing-when-using-anchors-instead-of-buttons/> "How can I prevent button-mashing when using anchors instead of buttons? on Stack Overflow"
+[2]: <http://api.jquery.com/category/miscellaneous/data-storage/> "Data Storage on jQuery API"

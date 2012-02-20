@@ -1,0 +1,25 @@
+--- 
+layout: post
+title: RTSJ, the marble sorter and MaRTE OS
+tags: 
+- code
+- jrate
+- marteos
+- masters project
+- University
+status: publish
+type: post
+published: true
+---
+I figure that I may as well give a brief spec of my project for myself and anyone else that may care. The project I am doing is basically checking if the [RTS module][1] in the CS department should be teaching RTSJ rather than what is currently taught, Ada. This module is taught with a practical element that involves the students creating a system in Ada that runs a marble sorter which is connected to a barebones x86 machine. The Ada code is compiled and then linked with the [MarteOS][2] system so that the entire file is the operating system and run code in one.
+
+So the project I've been working on is to update the [jRate][3] compiler with the [MarteOS patch][4] so that the marble sorting element of the course can be taught using RTSJ. The only thing that the patch seems to do is provide scripts for linking in MarteOS as well as providing the thread scheduler.
+
+The basic elements such as handling and dealing with the interrupt model all need to be implemented, as well as accessing the device registers to be able to control the marble sorter (which is connected via a serial and parallel cable).
+
+Any post about this will have the tag 'masters project' added to it and, although some of this has already been done, I want to write about it for my own self and if anyone is working on a similar thing.
+
+[1]: <http://www-course.cs.york.ac.uk/rts> "Real Time Systems course page"
+[2]: <http://marte.unican.es/> "MarteOS project site"
+[3]: <http://jrate.sourceforge.net/> "jRate project page"
+[4]: <http://www-users.cs.york.ac.uk/~osantos/jrate_marteos/jrate_marteos.html> "MarteOS patch for jRate"

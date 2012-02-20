@@ -1,0 +1,23 @@
+--- 
+layout: post
+title: Fon Bookmarklet
+tags: 
+- code
+- javascript
+- Programming
+status: publish
+type: post
+published: true
+---
+I'm about to go on a short holiday around Europe. I've my Fon router plugged in, ready to get the benefits of free internet on my iPod Touch whilst away. Typed a quick 'fon bookmarklet' search into google and only found a youtube video of some chinese person showing his working (but not actually giving the code)
+
+So here's mine. It's simple, but it works:
+
+{% highlight javascript %}
+document.getElementById('login_email').value='EMAIL_ADDRESS'; document.getElementById('login_password').value='PASSWORD'; document.getElementById('login_email').parentElement.submit()
+{% endhighlight %}
+
+And here's it in link form for clicking and dragging to the bookmarks toolbar:
+<a href="javascript:document.getElementById('login_email').value='EMAIL_ADDRESS';document.getElementById('login_password').value='PASSWORD';document.getElementById('login_email').parentElement.submit()">Fon Login</a>
+
+My own link has obfuscation on the password just so that it's not blatantly obvious in the link (maybe I'll do some obfuscation code eventually), but changing those details would work for the 'Fon Login' page that loads up when connecting to a FON_AP wifi point. It works in Safari, at least. The 'parentElement' is null in Firefox but since this is for an iPod Touch, I don't really mind. If anyone knows why it's null then just let me know.

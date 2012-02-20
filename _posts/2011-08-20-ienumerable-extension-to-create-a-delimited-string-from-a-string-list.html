@@ -1,0 +1,37 @@
+--- 
+layout: post
+title: IEnumerable extension to create a delimited string from a string list
+tags: 
+- C#
+- dotnet
+- extension
+- ienumerable
+- Programming
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+  _syntaxhighlighter_encoded: "1"
+---
+With string lists, one thing that I find myself doing a lot is combining the list by some delimiter. In C#, this is a fairly easy thing to do but (today especially) I've seen a lot of places where people suggest using a string builder and appending a formatted string (then getting a substring to remove the last delimiter) or something similar. I'm not completely against this, I just think this method is neater:
+
+[csharp]
+        public static string ToString&lt;T&gt;(this IEnumerable&lt;T&gt; source, string delimiter)
+        {
+            return string.Join(delimiter, source);
+        }
+[/csharp]
+
+That will throw up an exception if 'source' is null. That's fine for me, since I don't want that extension from hiding something that might be wrong elsewhere (i.e. why am I trying to join a null list). If you want to make this work fine and dandy for a null source, you can just use the <a title="Null Coalescing Operator" href="http://msdn.microsoft.com/en-US/library/ms173224(v=VS.80).aspx">null coalescing operator</a> and provide an empty source:
+
+[csharp]
+        public static string ToString&lt;T&gt;(this IEnumerable&lt;T&gt; source, string delimiter)
+        {
+            return string.Join(delimiter, source ?? Enumerable.Empty&lt;T&gt;());
+        }
+[/csharp]
+
+Now why do I think this is a better solution that the string builder option? Well, if you whack open <a title="Redgate's Reflector" href="http://reflector.red-gate.com">Reflector</a>, you'll notice that the <a title="String.Join on MSDN" href="http://msdn.microsoft.com/en-us/library/57a79xd0.aspx">Join</a> method uses a StringBuilder object and builds up from there. So since it's already built straight into the framework, why reinvent the wheel? Of course, the Join method with an IEnumerable as an argument is only available on .NET 4.0. Anything prior to .NET 4.0 and you'll have to pass in a string array (at which point the string builder method would be useful).
+
+Another point to notice from the documentation is that the Join method will set the separator to String.Empty, if you pass it a null. The same applies to any element in the list that is null - it is simply replaced by another empty string.

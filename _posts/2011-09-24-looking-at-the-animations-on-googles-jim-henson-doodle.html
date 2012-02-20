@@ -1,0 +1,60 @@
+--- 
+layout: post
+title: Looking at the animations on Google's Jim Henson doodle
+tags: 
+- googledoodle
+- javascript
+- JavaScript
+- jquery
+- jsfiddle
+- Random Musings
+- sprite
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+  _syntaxhighlighter_encoded: "1"
+  _thumbnail_id: "307"
+  _aioseop_keywords: jquery, javascript, spritely, google doodle,
+  _aioseop_description: Looking at the jQuery Spritely plugin to recreate the animations on the Jim Henson 75th Birthday Google Doodle
+---
+On opening Google today, I'm shown a couple of muppets I can control (well, I can open their mouths and spin their heads around). This is to celebrate Jim Henson's 75th birthday, but I'm interested in what makes it tick since there are a few little animations in there and I want to see what Google does.
+
+<img src="http://www.bolsterweb.com/wp-content/uploads/2011/09/google-doodle-24-sep-2011.jpg" alt="Google Doodle for Jim Henson&#039;s 75th Birthday" title="Google Doodle for Jim Henson&#039;s 75th Birthday" width="371" height="183" class="size-full wp-image-307 aligncenter" />
+
+Looking at the images that are loaded, they seem to be PNG sprite images. So then I went on a little (short lived) mission on how to recreate the animations myself. Honestly, there are muppet animations you can play with soon.
+
+There is a handy little jQuery plugin called <a href="http://spritely.net/" title="Spritely">Spritely</a>. This will take a jQuery selector object and manipulate the background image position to generate the animation. Nicely, all you have to do is supply the number of frames and it will do the rest for you.
+
+So I open up a new <a href="http://jsfiddle.net/jonathon/5GSah/" title="jsFiddle">jsFiddle</a>, fill in my HTML and CSS with the containers and background images I want and then put in this little beauty:
+
+[javascript]
+$('div').click(function() {
+    var $this = $(this);
+    $this.sprite({
+        fps: 9,
+        no_of_frames: $this.data(&quot;num&quot;),
+        on_last_frame: function(obj) {
+            obj.destroy();
+        }
+    });
+});
+[/javascript]
+
+Now, what I've done here is make it so that every div object will generate a sprite animation on click. This probably isn't the prettiest way to do it, but I have *only* just discovered Spritely so I'll look at the docs and improve. If you want to let me know in the comments, that'd be appreciated.
+
+(Also, for the eagle eyed of you, I'm using a data attribute to store the number of frames in the animation. This was painstakingly done by opening the PNG files and counting the muppet heads. I bet I will find Spritely would do it for me after reviewing the documentation).
+
+You've waited long enough. Go to the jsFiddle to play with the <a href="http://jsfiddle.net/jonathon/5GSah/" title="Muppet animations for Google Doodle on jsFiddle">Muppet animations</a>.
+
+Alternatively, here are links to the sprite images I've seen. Haven't found anything for the blue guy on the left though! If you have, let me know and I'll add it.
+<ul>
+
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-2oa.png">http://www.google.co.uk/logos/2011/henson11-hp-2oa.png</a></li>
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-3oa.png">http://www.google.co.uk/logos/2011/henson11-hp-3oa.png</a></li>
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-4ga.png">http://www.google.co.uk/logos/2011/henson11-hp-4ga.png</a></li>
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-6ea-lr.png">http://www.google.co.uk/logos/2011/henson11-hp-6ea-lr.png</a></li>
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-6ea-er.png">http://www.google.co.uk/logos/2011/henson11-hp-6ea-er.png</a></li>
+<li><a href="http://www.google.co.uk/logos/2011/henson11-hp-6ea.png">http://www.google.co.uk/logos/2011/henson11-hp-6ea.png</a></li>
+</ul>
