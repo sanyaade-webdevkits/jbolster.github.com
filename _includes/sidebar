@@ -1,0 +1,39 @@
+<div class="sidebar">
+    <div class="widget">
+        <ul>
+            <li>
+                <a href="http://stackexchange.com/users/{{ site.author.stackexchange }}"><img src="http://stackexchange.com/users/flair/{{ site.author.stackexchange }}.png" width="208" height="58" alt="combined Stack Exchange profiles for {{ site.author.name }}" title="combined Stack Exchange profiles for {{ site.author.name }}">
+                </a>
+            </li>
+            <li><a href="https://plus.google.com/{{ site.author.gplus }}?rel=author">Google+</a></li>
+            <li><a href="http://twitter.com/{{ site.author.twitter }}">Twitter</a></li>
+            <li><a href="http://facebook.com/{{ site.author.facebook }}">Facebook</a></li>
+        </ul>
+    </div>
+    <div class="widget">
+        <h2>Recent Posts</h2>
+		<ul>
+            {% for node in site.posts limit:5 %} 
+	            <li><a href="{{ node.url }}" title="{{ node.title }}">{{ node.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="widget">
+        <h2>Archive</h2>
+        <ul>
+          {% for post in site.posts %}
+
+            {% unless post.next %}
+              <li>{{ post.date | date: '%B %Y' }}</li>
+            {% else %}
+              {% capture monthyear %}{{ post.date | date: '%B %Y' }}{% endcapture %}
+              {% capture nmonthyear %}{{ post.next.date | date: '%B %Y' }}{% endcapture %}
+                {% if monthyear != nmonthyear %}
+                    <li>{{ post.date | date: '%B %Y' }}</li>
+                  {% endif %}
+            {% endunless %}
+
+          {% endfor %}
+        </ul>
+    </div>
+</div>

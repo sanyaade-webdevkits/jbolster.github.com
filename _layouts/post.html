@@ -1,5 +1,31 @@
 ---
 layout: default
 ---
-{% include JB/setup %}
-{% include themes/twitter/post.html %}
+<a href="#disqus">Go to comments</a>
+<div class="post">
+    <div class="post-header">
+        <h2><a href="{{ page.url }}" title="{{ page.title }}">{{ page.title }}</a></h2>
+    </div>
+    <div class="post-info">
+        <span class="date">{{ page.date | date_to_long_string}}</span>
+    </div>
+    <div class="post-entry">
+        {{ content | markdownify }}
+    </div>
+    <div class="post-meta">
+        {% unless page.tags == empty %}
+            {% for tag in page.tags %} 
+	            <span class="label label-info">{{ tag }}</span>
+            {% endfor %}
+        {% endunless %}  
+    </div>
+    <hr id="disqus">
+    {% include disqus %}
+</div>
+    <div class="post-entry">
+        {{ content | markdownify }}
+    </div>    <div class="post-entry">
+        {{ content | markdownify }}
+    </div>    <div class="post-entry">
+        {{ content | markdownify }}
+    </div>

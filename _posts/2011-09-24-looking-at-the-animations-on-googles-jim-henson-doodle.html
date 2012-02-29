@@ -4,7 +4,6 @@ title: Looking at the animations on Google's Jim Henson doodle
 tags: 
 - googledoodle
 - javascript
-- JavaScript
 - jquery
 - jsfiddle
 - Random Musings
@@ -15,7 +14,7 @@ published: true
 ---
 On opening Google today, I'm shown a couple of muppets I can control (well, I can open their mouths and spin their heads around). This is to celebrate Jim Henson's 75th birthday, but I'm interested in what makes it tick since there are a few little animations in there and I want to see what Google does.
 
-<img src="http://www.bolsterweb.com/wp-content/uploads/2011/09/google-doodle-24-sep-2011.jpg" alt="Google Doodle for Jim Henson&#039;s 75th Birthday" title="Google Doodle for Jim Henson&#039;s 75th Birthday" width="371" height="183" class="size-full wp-image-307 aligncenter" />
+![Google Doodle for Jim Henson&#039;s 75th Birthday](/images/google-doodle-24-sep-2011.jpg)
 
 Looking at the images that are loaded, they seem to be PNG sprite images. So then I went on a little (short lived) mission on how to recreate the animations myself. Honestly, there are muppet animations you can play with soon.
 
@@ -23,18 +22,16 @@ There is a handy little jQuery plugin called <a href="http://spritely.net/" titl
 
 So I open up a new <a href="http://jsfiddle.net/jonathon/5GSah/" title="jsFiddle">jsFiddle</a>, fill in my HTML and CSS with the containers and background images I want and then put in this little beauty:
 
-[javascript]
-$('div').click(function() {
-    var $this = $(this);
-    $this.sprite({
-        fps: 9,
-        no_of_frames: $this.data(&quot;num&quot;),
-        on_last_frame: function(obj) {
-            obj.destroy();
-        }
+    $('div').click(function() {
+        var $this = $(this);
+        $this.sprite({
+            fps: 9,
+            no_of_frames: $this.data(&quot;num&quot;),
+            on_last_frame: function(obj) {
+                obj.destroy();
+            }
+        });
     });
-});
-[/javascript]
 
 Now, what I've done here is make it so that every div object will generate a sprite animation on click. This probably isn't the prettiest way to do it, but I have *only* just discovered Spritely so I'll look at the docs and improve. If you want to let me know in the comments, that'd be appreciated.
 

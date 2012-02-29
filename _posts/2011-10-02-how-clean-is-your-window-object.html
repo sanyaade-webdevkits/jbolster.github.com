@@ -4,7 +4,6 @@ title: How clean is your window (object)?
 tags: 
 - code
 - javascript
-- JavaScript
 - Programming
 status: publish
 type: post
@@ -44,7 +43,7 @@ Here it is in glorious, unminified code:
     }(window))
 
 And here's a version that I've minified down:
-    (function($){var k={},w,d=document,b=d.body,i=d.createElement("iframe");i.style.display="none";i=b.appendChild(i);w=i.contentWindow;b.removeChild(i);for(var s in $){k[s]=$[s]}for(var s in w){delete k[s]}return k}(window))
+    `(function($){var k={},w,d=document,b=d.body,i=d.createElement("iframe");i.style.display="none";i=b.appendChild(i);w=i.contentWindow;b.removeChild(i);for(var s in $){k[s]=$[s]}for(var s in w){delete k[s]}return k}(window))`
 
 This is written as [self executing JavaScript][2] and will return an object containing the objects that we worked out were added to the window.
 

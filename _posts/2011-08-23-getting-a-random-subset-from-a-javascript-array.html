@@ -39,23 +39,21 @@ So what's next? Well, we can use a fairly efficient shuffle algorithm known as t
 
 Let's have a look at the implementation from that answer:
 
-[javascript]
-function shuffle(array) {
-    var tmp, current, top = array.length;
+    function shuffle(array) {
+        var tmp, current, top = array.length;
 
-    if(top) while(--top) {
-        current = Math.floor(Math.random() * (top + 1));
-        tmp = array[current];
-        array[current] = array[top];
-        array[top] = tmp;
+        if(top) while(--top) {
+            current = Math.floor(Math.random() * (top + 1));
+            tmp = array[current];
+            array[current] = array[top];
+            array[top] = tmp;
+        }
+
+        return array;
     }
 
-    return array;
-}
-
-// Randomly sort the array and take 6
-var randomArray = shuffle(myArray).slice(0,6);
-[/javascript]
+    // Randomly sort the array and take 6
+    var randomArray = shuffle(myArray).slice(0,6);
 
 The time complexity here is O(n) so it's much quicker than just using the Math.random() sort. How much quicker? Well, let's have a look at the performance of the Fisher-Yates shuffle vs the random sort using <a title="Performance of Fisher-Yates shuffle vs Math.random sort function on jsPerf" href="http://jsperf.com/fisher-yates-shuffle-vs-math-random">jsPerf</a>.
 
