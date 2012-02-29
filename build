@@ -1,0 +1,4 @@
+jekyll --no-auto
+
+# copy the newly built 404.html
+cp _site/404.html .
