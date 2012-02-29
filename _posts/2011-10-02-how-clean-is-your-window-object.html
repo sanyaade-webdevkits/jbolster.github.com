@@ -42,9 +42,6 @@ Here it is in glorious, unminified code:
 	    return keys;
     }(window))
 
-And here's a version that I've minified down:
-    `(function($){var k={},w,d=document,b=d.body,i=d.createElement("iframe");i.style.display="none";i=b.appendChild(i);w=i.contentWindow;b.removeChild(i);for(var s in $){k[s]=$[s]}for(var s in w){delete k[s]}return k}(window))`
-
 This is written as [self executing JavaScript][2] and will return an object containing the objects that we worked out were added to the window.
 
 Note: This is a very quick and dirty piece of code. Mostly it was an experiment for myself, to use the 'clean window' object. It won't tell you if a native window property was changed or anything, it only compares the keys. Just remember that.

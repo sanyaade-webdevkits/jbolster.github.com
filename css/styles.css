@@ -1,3 +1,24 @@
+.container-fluid{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+h2{
+    font-family: Arial;
+    color: #444;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.page-header .summarypic{
+    float:right;
+    margin: -30px 20px 18px 20px;
+}
+
+.widget h2 {
+    font-size: 15px;
+}
+
 .widget ul {
     list-style: none;
     margin: 0 0 20px 0;
@@ -14,12 +35,10 @@
 }
 
 .post-info {
-    font-size: 0.75em;
     color: #aaa;
 }
 
 footer{
-    height: 200px;
     background-color: #2c2c2c;
     margin-top: 20px;
     padding: 10px;
@@ -31,9 +50,16 @@ footer{
     border-radius: 0;
 }
 
-h2{
-    font-family: Arial;
-    color: #444;
-    font-size: 22px;
-    font-weight: normal;
+.post-navigation{
+    font-size: 8px;
+    clear: both;
+    padding: 40px 0 20px 0;
 }
+
+.post-navigation .prev{
+    float: left;
+}
+.post-navigation .next{
+    float: right;
+}
+

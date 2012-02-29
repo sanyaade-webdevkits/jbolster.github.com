@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-<a href="#disqus">Go to comments</a>
 <div class="post">
     <div class="post-header">
         <h2><a href="{{ page.url }}" title="{{ page.title }}">{{ page.title }}</a></h2>
@@ -15,17 +14,18 @@ layout: default
     <div class="post-meta">
         {% unless page.tags == empty %}
             {% for tag in page.tags %} 
-	            <span class="label label-info">{{ tag }}</span>
+	            <span class="label">{{ tag }}</span>
             {% endfor %}
+        {% endunless %}  
+    </div>
+    <div class="post-navigation">
+        {% unless page.previous == nill %}
+            <a class="prev label label-info" href="{{ page.previous.url }}" title="{{ page.previous.title }}">&lt;&lt; {{ page.previous.title }}</a>
+        {% endunless %}  
+        {% unless page.next == nill %}
+            <a class="next label label-info" href="{{ page.next.url }}" title="{{ page.next.title }}">{{ page.next.title }} &gt;&gt;</a>
         {% endunless %}  
     </div>
     <hr id="disqus">
     {% include disqus %}
 </div>
-    <div class="post-entry">
-        {{ content | markdownify }}
-    </div>    <div class="post-entry">
-        {{ content | markdownify }}
-    </div>    <div class="post-entry">
-        {{ content | markdownify }}
-    </div>

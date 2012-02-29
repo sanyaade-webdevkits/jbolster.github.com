@@ -3,6 +3,14 @@ layout: default
 ---
 <div class="page-header">
   <h2>{{ page.title }}</h2>
+  {% unless page.summarypic == nil %}
+    <img class="summarypic" title="{{ page.summarypic.title }}" src="{{ page.summarypic.src }}">
+  {% endunless %}
 </div>
-
-{{ content }}
+<div class="page-content">
+    {% if page.markdown %}
+        {{ content | markdownify }}
+    {% else %}
+        {{ content }}
+    {% endif %}
+</div>

@@ -5,7 +5,7 @@ permalink: /:categories/:year/:month/:day/:title
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 include: ["_pages"]
 auto: false
-pygments: true
+pygments: false
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -21,7 +21,7 @@ author :
   gplus: 115124500511465538690
   stackexchange : 4b41b43950c54ca1b724248392596be9
 
-production_url : http://jbolster.github.com
+url : http://jbolster.github.com
 
 disqus:
   shortname: jonathonbolster
