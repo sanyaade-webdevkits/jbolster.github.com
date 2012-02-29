@@ -8,25 +8,22 @@ tags:
 status: publish
 type: post
 published: true
-meta: 
-  _edit_last: "1"
-  _syntaxhighlighter_encoded: "1"
 ---
-I had a bit of a problem in work. I had to write some SQL to drop a uniqueness constraint on a column but was unsure of the constraint name (since it was auto generated with a GUID on the end). Looking at the <a href="http://msdn.microsoft.com/en-us/library/aa275462(v=sql.80).aspx" title="Alter Table documentation on MSDN">MSDN 'Alter table' documentation</a>, it seems that you need the constraint name to drop it (please correct me if I'm wrong). I knew the table and the column names, so this is what I needed to work with.
+I had a bit of a problem in work. I had to write some SQL to drop a uniqueness constraint on a column but was unsure of the constraint name (since it was auto generated with a GUID on the end). Looking at the [MSDN 'Alter table' documentation][1], it seems that you need the constraint name to drop it (please correct me if I'm wrong). I knew the table and the column names, so this is what I needed to work with.
 
 So here's what I came up with and this did the job:
 
-[sql]
-            DECLARE @constraintName VARCHAR(50)
+    DECLARE @constraintName VARCHAR(50)
 
-            select @constraintName = CONSTRAINT_NAME
-            from INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE
-            WHERE TABLE_NAME = '[YOUR_TABLENAME]' AND COLUMN_NAME = '[YOUR_COLUMNNAME]'
+    select @constraintName = CONSTRAINT_NAME
+    from INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE
+    WHERE TABLE_NAME = '[YOUR_TABLENAME]' AND COLUMN_NAME = '[YOUR_COLUMNNAME]'
 
-            IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[YOUR_TABLENAME]') AND name = @constraintName)
-                EXEC('ALTER TABLE [YOUR_TABLENAME] DROP CONSTRAINT ' + @constraintName)
-[/sql]
+    IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[YOUR_TABLENAME]') AND name = @constraintName)
+        EXEC('ALTER TABLE [YOUR_TABLENAME] DROP CONSTRAINT ' + @constraintName)
 
-This worked for me since I know that the column will only have one constraint. Presumable the CONSTRAINT_COLUMN_USAGE will return multiple rows if there are multiple constraints. I also did the EXEC to get past the limitation that the DROP CONSTRAINT call doesn't accept a variable.
+This worked for me since I know that the column will only have one constraint. Presumably the `CONSTRAINT_COLUMN_USAGE` will return multiple rows if there are multiple constraints. I also did the `EXEC` to get past the limitation that the `DROP CONSTRAINT` call doesn't accept a variable.
 
 If anyone has any comments/improvements on the above, I'd appreciate if you let me know.
+
+[1]: <http://msdn.microsoft.com/en-us/library/aa275462(v=sql.80).aspx> "Alter Table documentation on MSDN"

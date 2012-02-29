@@ -6,17 +6,16 @@ tags: []
 status: draft
 type: post
 published: false
-meta: 
-  _edit_last: "1"
 ---
-		public static string PropertyName<T>(Expression<Func<T, object>> expression)
-		{
-			var body = expression.Body as MemberExpression;
 
-			if (body == null)
-			{
-				body = ((UnaryExpression)expression.Body).Operand as MemberExpression;
-			}
+    public static string PropertyName<T>(Expression<Func<T, object>> expression)
+    {
+        var body = expression.Body as MemberExpression;
 
-			return body.Member.Name;
-		}
+        if (body == null)
+        {
+            body = ((UnaryExpression)expression.Body).Operand as MemberExpression;
+        }
+
+        return body.Member.Name;
+    }

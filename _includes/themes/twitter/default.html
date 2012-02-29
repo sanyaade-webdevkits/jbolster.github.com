@@ -12,8 +12,8 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="{{ ASSET_PATH }}/css/1.4.0/bootstrap.css" rel="stylesheet">
-    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ ASSET_PATH }}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ ASSET_PATH }}/style.css?body=1" rel="stylesheet" type="text/css" media="all">
 
     <!-- Le fav and touch icons -->
   <!-- Update these with your own images
@@ -26,23 +26,35 @@
 
   <body>
 
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="{{ HOME_PATH }}">{{ site.title }}</a>
-          <ul class="nav">
-            {% assign pages_list = site.pages %}
-            {% assign group = 'navigation' %}
-            {% include JB/pages_list %}
-          </ul>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">{{ site.title }}</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                {% assign pages_list = site.pages %}
+                {% assign group = 'navigation' %}
+                {% include JB/pages_list %}
+            </ul>
+            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+          </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container">
-
-      <div class="content">
-        {{ content }}
+    <div class="container-fluid">
+      <div class="row-fluid">        
+          <div class="span8">
+            {{ content }}
+          </div>
+          <div class="span3">
+            {% include custom/sidebar %} 
+          </div>  
       </div>
 
       <footer>

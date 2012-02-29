@@ -15,40 +15,40 @@ meta:
 ---
 I recently wanted to see how polluted the global namespace of our web application was. By that, I mean I wanted to see how many unnecessary objects we were assigning to the window object.
 
-To do this, I wanted to compare against a clean window object. A quick look on Google and I found this article: <a href="http://darcyclarke.me/development/getting-a-clean-document-or-window-object-in-javascript/" title="Getting a clean document or window Object in JavaScript">Getting a clean document or window Object in JavaScript</a>. The basic idea is that you create a new iframe element, and you can use the contentWindow property of that to give you a nice clean window object. As the author states, you might want to do this to prevent the remapping of native methods but I just want it for a quick (i.e. hacky) way to see what objects have being put into my own 'clean' window.
+To do this, I wanted to compare against a clean window object. A quick look on Google and I found this article: [Getting a clean document or window Object in JavaScript][1]. The basic idea is that you create a new iframe element, and you can use the contentWindow property of that to give you a nice clean window object. As the author states, you might want to do this to prevent the remapping of native methods but I just want it for a quick (i.e. hacky) way to see what objects have being put into my own 'clean' window.
 
 What I do is create the iframe to get my clean window. Set up an object to copy across the objects from the main window object, then remove any that appear in the clean window.
 
 Here it is in glorious, unminified code:
-[javascript]
-(function(window){
-	var keys = {},
-	cleanWindow,
-	iframe = document.createElement(&quot;iframe&quot;);
+
+    (function(window){
+	    var keys = {},
+	    cleanWindow,
+	    iframe = document.createElement("iframe");
 	
-	iframe.style.display =&quot;none&quot;;
-	iframe = document.body.appendChild(iframe);
+	    iframe.style.display ="none";
+	    iframe = document.body.appendChild(iframe);
 	
-	cleanWindow = iframe.contentWindow;
-	document.body.removeChild(iframe);
+	    cleanWindow = iframe.contentWindow;
+	    document.body.removeChild(iframe);
 	
-	for(var keyName in window){
-		keys[keyName] = window[keyName];
-	}
+	    for(var keyName in window){
+		    keys[keyName] = window[keyName];
+	    }
 	
-	for(var keyName in cleanWindow) {
-		delete keys[keyName]
-	}
+	    for(var keyName in cleanWindow) {
+		    delete keys[keyName]
+	    }
 	
-	return keys;
-}(window))
-[/javascript]
+	    return keys;
+    }(window))
 
 And here's a version that I've minified down:
-[javascript]
-(function($){var k={},w,d=document,b=d.body,i=d.createElement(&quot;iframe&quot;);i.style.display=&quot;none&quot;;i=b.appendChild(i);w=i.contentWindow;b.removeChild(i);for(var s in $){k[s]=$[s]}for(var s in w){delete k[s]}return k}(window))
-[/javascript]
+    (function($){var k={},w,d=document,b=d.body,i=d.createElement("iframe");i.style.display="none";i=b.appendChild(i);w=i.contentWindow;b.removeChild(i);for(var s in $){k[s]=$[s]}for(var s in w){delete k[s]}return k}(window))
 
-This is written as <a href="http://stackoverflow.com/questions/592396/what-is-the-purpose-of-a-self-executing-function-in-javascript" title="What is the purpose of a self executing function in javascript? on StackOverflow">self executing JavaScript</a> and will return an object containing the objects that we worked out were added to the window.
+This is written as [self executing JavaScript][2] and will return an object containing the objects that we worked out were added to the window.
 
 Note: This is a very quick and dirty piece of code. Mostly it was an experiment for myself, to use the 'clean window' object. It won't tell you if a native window property was changed or anything, it only compares the keys. Just remember that.
+
+[1]: <http://darcyclarke.me/development/getting-a-clean-document-or-window-object-in-javascript/> "Getting a clean document or window Object in JavaScript"
+[2]: <http://stackoverflow.com/questions/592396/what-is-the-purpose-of-a-self-executing-function-in-javascript> "What is the purpose of a self executing function in javascript? on StackOverflow"

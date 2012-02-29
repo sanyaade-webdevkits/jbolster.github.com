@@ -1,0 +1,21 @@
+<div class="sidebar">
+    <div class="widget">
+        <ul>
+            <li>
+                <a href="http://stackexchange.com/users/4b41b439-50c5-4ca1-b724-248392596be9"><img src="http://stackexchange.com/users/flair/4b41b43950c54ca1b724248392596be9.png" width="208" height="58" alt="combined Stack Exchange profiles for Jonathon" title="combined Stack Exchange profiles for Jonathon">
+                </a>
+            </li>
+            <li><a href="https://plus.google.com/115124500511465538690?rel=author">Google+</a></li>
+            <li><a href="http://twitter.com/jbolster">Twitter</a></li>
+            <li><a href="http://facebook.com/bolster">Facebook</a></li>
+        </ul>
+    </div>
+    <div class="widget">
+        <h2>Recent Posts</h2>
+		<ul>
+            {% for node in site.posts limit:5 %} 
+	            <li><a href="{{ node.url }}" title="{{ node.title }}">{{ node.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

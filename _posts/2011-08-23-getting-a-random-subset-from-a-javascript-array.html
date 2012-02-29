@@ -17,25 +17,21 @@ For large arrays, this is unlikely to be a large problem. However, if you wanted
 
 This is where my solution comes in. You should randomly sort the array and then take a slice of the array for the amount of random elements you actually want. This ensures that you're not checking for duplicates. If there are duplicates, then it's because there was more than one of the element in the original array and you probably want them anyway. The point is, even with very small arrays you will never be stuck in a while loop that is trying to get a new and unique random element.
 
-[javascript]
-// Randomly sort the array
-myArray.sort(function(){ return Math.random() - 0.5 });
+    // Randomly sort the array
+    myArray.sort(function(){ return Math.random() - 0.5 });
 
-// Get a subset of 6 numbers
-var randomArray = arr.slice(0,6);
-[/javascript]
+    // Get a subset of 6 numbers
+    var randomArray = arr.slice(0,6);
 
-An array sort can take in a sort function to determine how it will sort the elements. A negative value will mean a&lt;b, a zero will mean a==b and a positive number means a&gt;b. Math.random() returns a value between 0 and 1 so by substracting 0.5 from it, we will be given a random value between -0.5 and 0.5. This is fine for our sort function.
+An array sort can take in a sort function to determine how it will sort the elements. A negative value will mean a<b, a zero will mean a==b and a positive number means a>b. Math.random() returns a value between 0 and 1 so by substracting 0.5 from it, we will be given a random value between -0.5 and 0.5. This is fine for our sort function.
 
 Okay - before anyone goes on about how this is a suboptimal solution I'm already ahead of you:
 
-[javascript]
-var counter = 0;
+    var counter = 0;
 
-myArray.sort(function(){ counter++; return Math.random() - 0.5 });
+    myArray.sort(function(){ counter++; return Math.random() - 0.5 });
 
-alert('Random was called ' + counter + ' times'); // Not a nice result
-[/javascript]
+    alert('Random was called ' + counter + ' times'); // Not a nice result
 
 Running the above code as a jsFiddle shows me that the sort function was called about 165 times (give or take) to shuffle an array of 45 elements. Running it on 10,000 elements and it gets called about 114,000 times. Madness!
 

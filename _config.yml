@@ -10,14 +10,13 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Jekyll Bootstrap
-tagline: Site Tagline
+title : Jonathon Bolster
+tagline: Programming, life, random
 author :
-  name : Name Lastname
-  email : blah@email.test
-  github : username
-  twitter : username
-  feedburner : feedname
+  name : Jonathon Bolster
+  email : jonathon@bolsterweb.com
+  github : jbolster
+  twitter : jbolster
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -122,4 +121,7 @@ JB :
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
+
+  tags_list :
+    provider : "custom"
   

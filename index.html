@@ -1,0 +1,27 @@
+---
+layout: default
+---
+{% for node in site.posts limit:10 %}
+    <div class="post">
+        <div class="post-header">
+          <h2><a href="{{ node.url }}" title="{{ node.title }}">{{ node.title }}</a></h2>
+        </div>
+        <div class="post-info">
+            <span class="date">{{ node.date | date_to_long_string}}</span>
+        </div>
+        <div class="post-entry">
+            {{ node.content | markdownify }}
+        </div>
+        <div class="post-meta">
+          {% unless node.tags == empty %}
+            {% assign tags_list = node.tags %}
+            {% include JB/tags_list %}
+          {% endunless %}  
+        </div>
+    </div>
+
+    {% unless forloop.last %}
+    <hr>
+    {% endunless %}
+
+{% endfor %}
