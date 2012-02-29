@@ -25,42 +25,35 @@
   </head>
 
   <body>
-
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="/">{{ site.title }}</a>
           <div class="nav-collapse">
             <ul class="nav">
-                <li><a href="#">mypage</a></li>
+                <li class="active"><a href="/" title="{{ site.author.name }}'s blog">My Blog</a></li>
+                <li><a href="/" title="{{ site.author.name }}'s CV">My CV</a></li>
+                <li><a href="/" title="About {{ site.author.name }}">About me</a></li>
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+            <p class="navbar-text pull-right">[ICONS],[ICONS],[ICONS],[ICONS]</p>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">        
+    <div class="container">
+      <div class="row">        
           <div class="span8">
             {{ content }}
           </div>
-          <div class="span3">
+          <div class="span4">
             {% include sidebar %} 
           </div>  
       </div>
-
-      <footer>
-        <p>&copy; {{ site.author.name }} 2012 
-          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
-          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-        </p>
-      </footer>
     </div>
+
+    <footer>
+        <p>&copy; {{ site.author.name }} {{ site.time | date:"%Y" }}</p>
+    </footer>
   </body>
 </html>

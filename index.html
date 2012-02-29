@@ -14,9 +14,10 @@ layout: default
         </div>
         <div class="post-meta">
           {% unless node.tags == empty %}
-            {% assign tags_list = node.tags %}
-            {% include JB/tags_list %}
-          {% endunless %}  
+                {% for tag in node.tags %} 
+	                <span class="label label-info">{{ tag }}</span>
+                {% endfor %}
+            {% endunless %}  
         </div>
     </div>
 

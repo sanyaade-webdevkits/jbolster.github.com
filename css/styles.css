@@ -21,4 +21,19 @@
 footer{
     height: 200px;
     background-color: #2c2c2c;
+    margin-top: 20px;
+    padding: 10px;
+    color: #fff;
+}
+
+.navbar-inner {
+    padding-top: 120px;   
+    border-radius: 0;
+}
+
+h2{
+    font-family: Arial;
+    color: #444;
+    font-size: 22px;
+    font-weight: normal;
 }
