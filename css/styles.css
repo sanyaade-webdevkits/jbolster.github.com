@@ -15,6 +15,12 @@ h2{
     margin: -30px 20px 18px 20px;
 }
 
+.lastbuild {
+    font-size: 10px;
+    color: #ccc;
+    float: right;
+}
+
 .widget h2 {
     font-size: 15px;
 }

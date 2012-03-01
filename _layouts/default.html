@@ -5,8 +5,8 @@
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.author.name }}</title>
     {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
     <meta name="author" content="{{ site.author.name }}">
-    <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/styles.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/styles.css?ts={{ site.time | date:"%Y%m%d%H%M"}}" rel="stylesheet" type="text/css" media="all">
     <link rel="alternate" type="application/rss+xml" title="{{ site.author.name }}'s RSS Feed" href="/atom.xml" />
   </head>
 
@@ -38,14 +38,11 @@
     </div>
 
     <footer>
-        <p>&copy; {{ site.author.name }} {{ site.time | date:"%Y" }}</p>
+        <p>&copy; {{ site.author.name }} {{ site.time | date:"%Y" }} <span class="lastbuild">Last build: {{ site.time | date:"%H:%M %Y.%m.%d" }}</span></p>
     </footer>
-    <link href="/css/prettify.css" type="text/css" rel="stylesheet" />
-    <script src="/js/google-code-prettify/prettify.js"></script>
-    <script>
-        addEventListener('load', function (event) { prettyPrint() }, false);
-    </script>
-
-    </script>
+    <link href="/thirdparty/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script src="/thirdparty/google-code-prettify/prettify.js"></script>
+    <script src="/thirdparty/jquery-1.7.1.min.js"></script>
+    <script src="/js/global.js?ts={{ site.time | date:"%Y%m%d%H%M"}}"></script>
   </body>
 </html>
