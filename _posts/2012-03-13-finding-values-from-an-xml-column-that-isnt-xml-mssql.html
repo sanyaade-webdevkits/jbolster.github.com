@@ -1,0 +1,22 @@
+--- 
+layout: post
+title: "Finding values of XML data from a non XML column in MSSQL"
+tags: [mssql,xml,convert]
+
+type: post
+published: false
+---
+
+I had a little bit of an issue at work when I had to create a query that returned values that were stored in an XML column. Normally you can use the [XML value method][1] to get these. My problem was that the column I wanted had XML stored in it but wasn't actually defined as an XML type.
+
+This requires a conversion into XML. For anyone looking at the same problem, this is what I did
+
+    SELECT 
+        tbl.ColumnName
+        ref.value('FirstName[1]', 'nvarchar(100)') as [FirstName],
+        ref.value('LastName[1]', 'nvarchar(100)') as [LastName],
+    FROM myTable tbl 
+    CROSS APPLY (SELECT CONVERT(xml, tbl.MyNonXmlCol)) as T(X)
+    CROSS APPLY T.X.nodes('//AuthorDetails[1]') R(ref)
+    
+[1]: <http://msdn.microsoft.com/en-us/library/ms178030.aspx> "xml data type value method at MSDN"
